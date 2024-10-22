@@ -1,0 +1,35 @@
+{% extends 'hmpapp/base.html' %}
+
+{% block pgtitle %}Dashboard{% endblock %}
+
+{% block css %}{% endblock %}
+
+
+{% block title %}HMP | Dashboard{% endblock %}
+<div>{% block content %} {% load static %}</div>
+<!-- start -->
+<div class="font-mono">
+
+    <div class="text-center text-xl font-bold">Projects</div>
+    <div class="grid grid-cols-2 gap-2 text-center py-2 mx-1">
+        <a href="/projects/onhold"><div class="p-1 border border-yellow-500 rounded-md"><b>onHold</b> <br> {{len_Proj_Data_Onhold}}</div></a>
+        <a href="/projects/talk"><div class="p-1 border border-yellow-500 rounded-md"><b>Talk</b> <br> {{len_Proj_Data_Talk}}</div></a>
+        <a href="/projects/new"><div class="p-1 border border-yellow-500 rounded-md"><b>New</b> <br> {{len_Proj_Data_New}}</div></a>
+        <a href="/projects/progress"><div class="p-1 border border-yellow-500 rounded-md"><b>Progress</b> <br> {{len_Proj_Data_Progress}}</div></a>
+        <a href="/projects/submission"><div class="p-1 border border-yellow-500 rounded-md"><b>Submission</b> <br> {{len_Proj_Data_Submission}}</div></a>
+        <a href="/projects/done"><div class="p-1 border border-yellow-500 rounded-md"><b>Done</b> <br> {{len_Proj_Data_Done}}</div></a>
+        <a href="/projects/all" class="col-span-2"><div class="p-1 border border-yellow-500 rounded-md "><b>Total</b>  <br> {{len_Proj_Data_All}}</div></a>
+    </div>
+    
+    <!-- Request  -->
+    <a href="/request/new" rel="noopener noreferrer">
+        <div class="text-md font-bold p-1 my-2 mx-1 border rounded-md bg-indigo-300 text-center">
+            <i class="mr-2 fa-solid fa-bell"></i>See Request History
+            <b class="px-2 rounded-full bg-green-800 text-white">{{len_Req_Data_Done}}</b>
+        </div>
+    </a>
+    
+    
+</div>    
+<!-- end -->
+{% endblock %}

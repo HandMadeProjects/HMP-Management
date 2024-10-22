@@ -1,0 +1,38 @@
+{% extends 'hmpapp/base.html' %}
+
+{% block pgtitle %}Account{% endblock %}
+
+{% block title %}HMP | Account{% endblock %}
+<div>{% block content %} {% load static %}</div>
+<!-- start -->
+
+<div>
+    <!-- body -->
+    <section>
+        <div class="pb-10">
+            <div class="mx-20 text-center border border-gray-300 shadow shaodw-md shadow-gray-400 rounded-md p-1">
+                <img class="h-40 mx-auto" src="https://raw.githubusercontent.com/AtharvaPawar456/HandMadeProjects/main/static/your-logo.png" alt="Profile Image">
+            </div>
+            <div class="my-4">
+                <a href="/user_logout/" rel="noopener noreferrer" class="p-1 border rounded-md bg-yellow-200 text-center font-bold mt-2 hover:shadow hover:shadow-md hover:shadow-green-600 hover:shadow hover:shadow-md hover:shadow-yellow-600 mx-32">
+                    Logout
+                </a>
+            </div>
+            <div class="p-2 m-2 border rounded-md bg-yellow-100 ">
+                <p class="text-center font-bold text-md mb-2">Details</p>
+                <p>Name: {{ user.username|title }}</p>
+                <p>Email: {{ user.email }}</p>  <!-- Accessing the Django user email -->
+                <p>Role: {{ user_data.role|title }}</p> <!-- Displaying the user's role -->
+                <p class="font-bold text-center">Created on</p> <!-- Displaying the publication date -->
+                <p class="text-center">{{ user_data.pub_date }} - {{ user_data.pub_time }}</p> <!-- Displaying the publication time -->
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+
+
+<!-- end -->
+{% endblock %}

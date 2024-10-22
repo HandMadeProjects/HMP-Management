@@ -1,0 +1,100 @@
+{% extends 'hmpapp/base.html' %}
+
+{% block pgtitle %}Request : {{LenprojectRequest}}{% endblock %}
+
+{% block css %}
+    /* Styling for the dropdown card */
+    .dropdown-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    }
+
+    .dropdown-summary {
+    padding: 10px;
+    background-color: #f9f9f9;
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    }
+
+    .dropdown-summary:hover {
+    background-color: #f0f0f0;
+    }
+
+    .dropdown-content {
+    display: none; /* Initially hidden */
+    }
+
+    details[open] .dropdown-content {
+    display: block; /* Display when the summary is clicked */
+    }
+
+{% endblock %}
+
+
+{% block title %}HMP | Request{% endblock %}
+<div>{% block content %} {% load static %}</div>
+<!-- start -->
+<div class="pb-20">
+    <a href="/addrequest/"><div class="mx-2 p-1 border rounded-md bg-green-300 text-center font-bold mb-2 hover:shadow hover:shadow-md hover:shadow-green-600
+    hover:shadow hover:shadow-md hover:shadow-green-600">
+        <i class="mr-2 fa-solid fa-square-plus"></i>Add New Request
+    </div></a>
+
+
+    <div class="mx-2 grid grid-cols-3 gap-2 mb-4">
+        <a href="/request/new"><p class="p-1 border rounded-md bg-yellow-200 text-center font-bold mt-2 hover:shadow hover:shadow-md hover:shadow-green-600 hover:shadow hover:shadow-md hover:shadow-yellow-600">
+            New
+        </p></a>
+        <a href="/request/done"><p class="p-1 border rounded-md bg-yellow-200 text-center font-bold mt-2 hover:shadow hover:shadow-md hover:shadow-green-600 hover:shadow hover:shadow-md hover:shadow-yellow-600">
+            Done
+        </p></a>
+        <a href="/request/all"><p class="p-1 border rounded-md bg-yellow-200 text-center font-bold mt-2 hover:shadow hover:shadow-md hover:shadow-green-600 hover:shadow hover:shadow-md hover:shadow-yellow-600">
+            All
+        </p></a>
+    </div>
+
+
+    <!-- Card with Dropdown -->
+    {% for request in projectRequest %}
+        <details class="dropdown-card p-2 m-2 {% if request.status == 'done' %}bg-green-200{% else %}bg-red-200{% endif %}">
+            <summary class="dropdown-summary capitalize text-sm">
+                <!-- req: title -->
+                {{request.reqtitle}} - {{request.status}}
+                <!-- <b class="p-1 px-2 rounded-full bg-green-600 ml-2 text-white">O</b> -->
+            </summary>
+            
+            <div class="dropdown-content p-2 mt-2 border rounded-md bg-yellow-100">
+                <div class="grid grid-cols-2 gap-2">
+                    <p class="text-center"><i class="mr-2 fa-solid fa-calendar-days"></i>{{request.pub_date}}</p>
+                    <p class="text-center"><i class="mr-2 fa-regular fa-clock"></i>{{request.pub_time}}</p>
+                </div>
+    
+                <p class="capitalize rounded-md bg-indigo-100 text-xs font-bold mt-2 mb-2 p-1 shadow shadow-md shadow-green-600">
+                    {{request.req_details}}
+                </p>
+            
+                <div class="grid grid-cols-3 gap-2">
+                    <a href="{% url 'updateRequestStatus' request.req_id 'done' %}" class="p-1 border rounded-md bg-green-300 text-center font-bold mt-2 hover:shadow hover:shadow-md hover:shadow-green-600">
+                        Done
+                    </a>
+                    <a href="{% url 'updateRequestStatus' request.req_id 'new' %}" class="p-1 border rounded-md bg-red-300 text-center font-bold mt-2 hover:shadow hover:shadow-md hover:shadow-green-600">
+                        Undone
+                    </a>
+                    <a href="/projectdetails/{{ request.proj_id }}" class="p-1 border rounded-md bg-red-300 text-center font-bold mt-2 hover:shadow hover:shadow-md hover:shadow-green-600">
+                        <i class="fa-solid fa-up-right-from-square"></i>
+                    </a>
+                </div>
+            </div>
+        </details>
+    {% empty %}
+        <p class="text-md font-bold text-red-600 text-center">No project request found.</p>  <!-- Message if no projects are available -->
+    {% endfor %}
+    
+    
+    
+</div>    
+<!-- end -->
+{% endblock %}

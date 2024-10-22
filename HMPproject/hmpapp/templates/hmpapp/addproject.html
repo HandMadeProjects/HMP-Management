@@ -1,0 +1,52 @@
+{% extends 'hmpapp/base.html' %}
+
+{% block pgtitle %}Project{% endblock %}
+
+{% block css %}{% endblock %}
+
+
+{% block title %}HMP | Project{% endblock %}
+<div>{% block content %} {% load static %}</div>
+<!-- start -->
+<div>
+
+
+
+    <h2 class="text-2xl text-center py-1 font-bold">Add Project <i class="fa-solid fa-address-card"></i></h2>
+
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+
+    <form action="{% url 'addproject' %}" method="post" class="max-w-sm mx-auto px-2">
+        {% csrf_token %}
+        
+        <div class="mb-5">
+            <label for="projtitle" class="block mb-2 text-sm font-medium text-gray-900 ">Project Title:</label>
+            <input type="text" id="projtitle" name="projtitle"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                placeholder="abc project" required>
+        </div>
+        
+        <div class="mb-5">
+            <label for="projdetails" class="block mb-2 text-sm font-medium text-gray-900">Details:</label>
+            <textarea id="projdetails" name="projdetails" rows="4" 
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                placeholder="Enter project details here..." required></textarea>
+        </div>
+        
+        <button type="submit" 
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-10 py-2.5 text-center">Save Project
+        </button>
+    </form>
+    
+
+
+
+
+
+
+
+</div>    
+<!-- end -->
+{% endblock %}

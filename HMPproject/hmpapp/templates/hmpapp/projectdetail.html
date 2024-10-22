@@ -1,0 +1,86 @@
+{% extends 'hmpapp/base.html' %}
+
+{% block pgtitle %}Project Details{% endblock %}
+
+
+{% block css %}
+    /* Styling for the dropdown card */
+    .dropdown-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    }
+
+    .dropdown-summary {
+    padding: 10px;
+    background-color: #f9f9f9;
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    }
+
+    .dropdown-summary:hover {
+    background-color: #f0f0f0;
+    }
+
+    .dropdown-content {
+    display: none; /* Initially hidden */
+    }
+
+    details[open] .dropdown-content {
+    display: block; /* Display when the summary is clicked */
+    }
+
+{% endblock %}
+
+
+{% block title %}HMP | Project Details{% endblock %}
+<div>{% block content %} {% load static %}</div>
+<!-- start -->
+<div class="mx-1 pb-10">
+    <!-- {{project}} -->
+
+    <div class="text-md text-center p-1 rounded-md bg-green-400 font-bold font-mono">{{project.projtitle}}</div>
+    <div class="text-xs text-center">From: {{project.user_name|title}} - Date : {{project.pub_date}} - Time : {{project.pub_time}}</div>
+    <div class="text-xs p-1 underline text-center font-bold">Status : {{project.status|title}}</div>
+    <div class="my-2 text-xs border border-green-600 p-1 rounded-md shadow shadow-green-600">{{project.proj_details}}</div>
+    <div class="font-bold font-mono text-md mb-2">Request List... {{LenprojectRequest}}</div>
+    <!-- <div class="">{{projectRequest}}</div> -->
+
+    {% for request in projectRequest %}
+        <details class="dropdown-card p-2 m-2 {% if request.status == 'done' %}bg-green-200{% else %}bg-red-200{% endif %}">
+            <summary class="dropdown-summary capitalize text-sm">
+                <!-- req: title -->
+                {{request.reqtitle}} - {{request.status}}
+                <!-- <b class="p-1 px-2 rounded-full bg-green-600 ml-2 text-white">O</b> -->
+            </summary>
+            
+            <div class="dropdown-content p-2 mt-2 border rounded-md bg-yellow-100">
+                <div class="grid grid-cols-2 gap-2">
+                    <p class="text-center"><i class="mr-2 fa-solid fa-calendar-days"></i>{{request.pub_date}}</p>
+                    <p class="text-center"><i class="mr-2 fa-regular fa-clock"></i>{{request.pub_time}}</p>
+                </div>
+    
+                <p class="capitalize rounded-md bg-indigo-100 text-xs font-bold mt-2 mb-2 p-1 shadow shadow-md shadow-green-600">
+                    {{request.req_details}}
+                </p>
+            
+                <div class="grid grid-cols-2 gap-2">
+                    <a href="{% url 'updateRequestStatus' request.req_id 'done' %}" class="p-1 border rounded-md bg-green-300 text-center font-bold mt-2 hover:shadow hover:shadow-md hover:shadow-green-600">
+                        Done
+                    </a>
+                    <a href="{% url 'updateRequestStatus' request.req_id 'new' %}" class="p-1 border rounded-md bg-red-300 text-center font-bold mt-2 hover:shadow hover:shadow-md hover:shadow-green-600">
+                        Undone
+                    </a>
+                </div>
+            </div>
+        </details>
+    {% empty %}
+        <p class="text-md font-bold text-red-600 text-center">No project request found.</p>  <!-- Message if no projects are available -->
+    {% endfor %}
+    
+    
+</div>    
+<!-- end -->
+{% endblock %}
